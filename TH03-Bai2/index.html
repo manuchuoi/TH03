@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        input {
+            margin: 5px;
+        }
+        button {
+            margin: 5px;
+            padding: 5px 10px;
+        }
+        p {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <input type="number" id="num1" placeholder="Enter first number">
+    <input type="number" id="num2" placeholder="Enter second number">
+    <button onclick="calculate()">Submit</button>
+    <p id="sum"></p>
+    <p id="difference"></p>
+    <p id="product"></p>
+    <p id="quotient"></p>
+
+    <script>
+        function calculate() {
+            const num1 = parseFloat(document.getElementById("num1").value);
+            const num2 = parseFloat(document.getElementById("num2").value);
+
+            fetch(`http://localhost:8000/add?a=${num1}&b=${num2}`)
+                .then(response => response.json())
+                .then(data => document.getElementById("sum").innerText = `Sum: ${data.result}`);
+
+            fetch(`http://localhost:8000/subtract?a=${num1}&b=${num2}`)
+                .then(response => response.json())
+                .then(data => document.getElementById("difference").innerText = `Difference: ${data.result}`);
+
+            fetch(`http://localhost:8000/multiply?a=${num1}&b=${num2}`)
+                .then(response => response.json())
+                .then(data => document.getElementById("product").innerText = `Product: ${data.result}`);
+
+            fetch(`http://localhost:8000/divide?a=${num1}&b=${num2}`)
+                .then(response => response.json())
+                .then(data => document.getElementById("quotient").innerText = `Quotient: ${data.result}`);
+        }
+    </script>
+</body>
+</html>

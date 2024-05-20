@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h2>Student Management</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Class</th>
+            </tr>
+        </thead>
+        <tbody id="student-table">
+            <!-- Student data will be inserted here -->
+        </tbody>
+    </table>
+    <script>
+        async function fetchStudents() {
+            const response = await fetch('http://localhost:8000/students');
+            const students = await response.json();
+            const studentTable = document.getElementById('student-table');
+
+            students.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.id}</td>
+                    <td>${student.name}</td>
+                    <td>${student.age}</td>
+                    <td>${student.address}</td>
+                    <td>${student.phone}</td>
+                    <td>${student.email}</td>
+                    <td>${student.class_name}</td>
+                `;
+                studentTable.appendChild(row);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchStudents);
+    </script>
+</body>
+</html>
